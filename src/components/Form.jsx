@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import useFilter from '../hooks/useFilter';
 import { FormContext } from '../context/FormProvider';
 import { PlanetsContext } from '../context/PlanetsProvider';
+import Filters from './Filters';
 
 function Form() {
   const { searchText,
@@ -43,7 +44,7 @@ function Form() {
     );
   };
 
-  const selectedFilters = (selectedOption) => {
+  const selectedFiltersChecker = (selectedOption) => {
     const alreadySelected = numericFilters.some(({ propertyFilter }) => {
       const result = propertyFilter === selectedOption;
       return result;
@@ -53,6 +54,10 @@ function Form() {
 
   const handleClick = () => {
     setNumericFilters(([...numericFilters, currentFilter]));
+  };
+
+  const handleClickExcludeAll = () => {
+    setNumericFilters([]);
   };
 
   return (
@@ -70,20 +75,15 @@ function Form() {
         onChange={ handleNumFilters }
         onClick={ handleNumFilters }
       >
-        {/* <option value="population" selected>population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option> */}
-        { !selectedFilters('population') && (
+        { !selectedFiltersChecker('population') && (
           <option value="population" selected>population</option>)}
-        { !selectedFilters('orbital_period') && (
+        { !selectedFiltersChecker('orbital_period') && (
           <option value="orbital_period">orbital_period</option>) }
-        {!selectedFilters('diameter') && (
+        {!selectedFiltersChecker('diameter') && (
           <option value="diameter">diameter</option>)}
-        {!selectedFilters('rotation_period') && (
+        {!selectedFiltersChecker('rotation_period') && (
           <option value="rotation_period">rotation_period</option>)}
-        {!selectedFilters('surface_water') && (
+        {!selectedFiltersChecker('surface_water') && (
           <option value="surface_water">surface_water</option>)}
       </select>
       <select
@@ -108,6 +108,14 @@ function Form() {
         onClick={ handleClick }
       >
         filtrar
+      </button>
+      {numericFilters.map((filter, i) => <Filters key={ i } filter={ filter } />)}
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ handleClickExcludeAll }
+      >
+        Excluir todos
       </button>
     </div>
   );
