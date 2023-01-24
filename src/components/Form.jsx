@@ -24,6 +24,7 @@ function Form() {
 
   useEffect(() => {
     filterByProprierties(numericFilters);
+    // setNumericFilters([...numericFilters, { ...currentFilter }]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numericFilters]);
 
@@ -40,6 +41,14 @@ function Form() {
         [name]: value,
       },
     );
+  };
+
+  const selectedFilters = (selectedOption) => {
+    const alreadySelected = numericFilters.some(({ propertyFilter }) => {
+      const result = propertyFilter === selectedOption;
+      return result;
+    });
+    return alreadySelected;
   };
 
   const handleClick = () => {
@@ -59,12 +68,23 @@ function Form() {
         name="propertyFilter"
         data-testid="column-filter"
         onChange={ handleNumFilters }
+        onClick={ handleNumFilters }
       >
-        <option value="population" selected>population</option>
+        {/* <option value="population" selected>population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        <option value="surface_water">surface_water</option> */}
+        { !selectedFilters('population') && (
+          <option value="population" selected>population</option>)}
+        { !selectedFilters('orbital_period') && (
+          <option value="orbital_period">orbital_period</option>) }
+        {!selectedFilters('diameter') && (
+          <option value="diameter">diameter</option>)}
+        {!selectedFilters('rotation_period') && (
+          <option value="rotation_period">rotation_period</option>)}
+        {!selectedFilters('surface_water') && (
+          <option value="surface_water">surface_water</option>)}
       </select>
       <select
         name="comparisonFilter"
