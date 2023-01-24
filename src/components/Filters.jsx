@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { FormContext } from '../context/FormProvider';
 
 function Filters(props) {
@@ -25,3 +26,7 @@ function Filters(props) {
 }
 
 export default Filters;
+
+Filters.propTypes = {
+  filter: PropTypes.shape().isRequired,
+};
