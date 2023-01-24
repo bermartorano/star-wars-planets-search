@@ -3,6 +3,7 @@ import useFilter from '../hooks/useFilter';
 import { FormContext } from '../context/FormProvider';
 import { PlanetsContext } from '../context/PlanetsProvider';
 import Filters from './Filters';
+import OrderComponente from './OrderComponente';
 
 function Form() {
   const { searchText,
@@ -117,6 +118,7 @@ function Form() {
       >
         Excluir todos
       </button>
+      <OrderComponente />
     </div>
   );
 }
