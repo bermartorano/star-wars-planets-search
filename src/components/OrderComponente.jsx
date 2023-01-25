@@ -13,27 +13,24 @@ export default function OrderComponente() {
   };
 
   const handleClick = () => {
-    const unknownValue = +1;
     const { orderProperty, orderRadio } = orderParam;
-    console.log('Propriedade: ', orderProperty);
-    const finalPlanetsCopy = [...finalPlanets];
-    console.log('Ordem: ', orderRadio);
+    const plntsWithUnknown = [];
+    const plntsWithoutUnkown = [];
+
+    finalPlanets.forEach((plnt) => {
+      if (Number.isNaN(Number(plnt[orderProperty]))) {
+        plntsWithUnknown.push(plnt);
+      } else {
+        plntsWithoutUnkown.push(plnt);
+      }
+    });
 
     if (orderRadio === 'DSC') {
-      finalPlanetsCopy.sort((a, b) => {
-        console.log('primeira propriedade: ', a[orderProperty]);
-        console.log('segunda propriedade: ', b[orderProperty]);
-        if (a[orderProperty] === 'unknown') return unknownValue;
-        return b[orderProperty] - a[orderProperty];
-      });
+      plntsWithoutUnkown.sort((a, b) => b[orderProperty] - a[orderProperty]);
     } else if (orderRadio === 'ASC') {
-      finalPlanetsCopy.sort((a, b) => {
-        if (a[orderProperty] === 'unknown') return unknownValue;
-        return a[orderProperty] - b[orderProperty];
-      });
+      plntsWithoutUnkown.sort((a, b) => a[orderProperty] - b[orderProperty]);
     }
-    setFinalPlanets(finalPlanetsCopy);
-    console.log(finalPlanetsCopy);
+    setFinalPlanets([...plntsWithoutUnkown, ...plntsWithUnknown]);
   };
 
   return (
