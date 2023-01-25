@@ -5,7 +5,10 @@ function useFilter() {
   const { planets, filteredPlanets, setFilteredPlanets } = useContext(PlanetsContext);
 
   const searchByName = (name) => {
-    const plntsFilteredByName = filteredPlanets.filter((plt) => plt.name.includes(name));
+    const plntsFilteredByName = filteredPlanets.filter((plt) => {
+      const result = plt.name.toLowerCase().includes(name);
+      return result;
+    });
     return plntsFilteredByName;
   };
 
